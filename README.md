@@ -5,6 +5,6 @@ Swift.Geometry consists of several 2D/3D geometric contructs built using platfor
 *To avoid platform dependant code, some mathematical functions such as `sqrtf()` have been implemented in this package.
 
 _Currently Implemented:_
-- **Vector2** (Basic functions finished, still a WIP)
-- **Vector3** (In the works)
+- **Vector2**
+- **Vector3**
 - **Quaternion** (In the works)

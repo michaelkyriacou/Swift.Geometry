@@ -8,28 +8,30 @@
 
 /**
  A structure holding positions in two dimensional space.
+ Coordinates are only to be set at initialisation and
+ using the methods provided.
  */
 struct Vector2
 {
     /**
      * Represents the coordinate along the x axis
      */
-    private var _x: Float!
+    private var _x: Float
     
     /**
      * Represents the coordinate along the y axis
      */
-    private var _y: Float!
+    private var _y: Float
     
-    var X: Float {
-        get { return _x}
-        set { _x = newValue }
-    }
+    /**
+     * Read-only coordinate on the X axis.
+     */
+    var X: Float { return _x }
     
-    var Y: Float {
-        get { return _y}
-        set { _y = newValue }
-    }
+    /**
+     * Read-only coordinate on the Y axis.
+     */
+    var Y: Float { return _y }
     
     /**
      Initialise a Vector2 instance `x` and `y` coordinates.
@@ -75,6 +77,54 @@ struct Vector2
     }
     
     /**
+     Returns an upward facing Vector2.
+     
+     Shortcut for Vector2(0.0, 1.0)
+     
+     - Returns: An upward facing Vector2 instance.
+     */
+    static func up() -> Vector2
+    {
+        return Vector2(x: 0.0, y: 1.0)
+    }
+    
+    /**
+     Returns a downward facing Vector2.
+     
+     Shortcut for Vector2(0.0, -1.0)
+     
+     - Returns: A downward facing Vector2 instance.
+     */
+    static func Down() -> Vector2
+    {
+        return Vector2(x: 0.0, y: -1.0)
+    }
+    
+    /**
+     Returns a left facing Vector2.
+     
+     Shortcut for Vector2(-1.0, 0.0)
+     
+     - Returns: A left facing Vector2 instance.
+     */
+    static func Left() -> Vector2
+    {
+        return Vector2(x: -1.0, y: 0.0)
+    }
+    
+    /**
+     Returns a right facing Vector2.
+     
+     Shortcut for Vector2(1.0, 0.0)
+     
+     - Returns: An right facing Vector2 instance.
+     */
+    static func Right() -> Vector2
+    {
+        return Vector2(x: 1.0, y: 0.0)
+    }
+    
+    /**
      Method for linear interpolation between two coordinates.<br/>
      Based on the linear interpolation formula: value1 + (value2 - value1) * amount.
      
@@ -99,6 +149,56 @@ struct Vector2
     func magnitude() -> Float
     {
         return Math.sqrtf((_x*_x) + (_y*_y))
+    }
+    
+    /**
+     Returns the dot product of two Vector3 coordinates.
+     
+     - Parameter v1: First Vector3 operand.
+     - Parameter v2: Second Vector3 operand.
+     
+     - Returns: The representation of the dot product between v1 and v2.
+     */
+    static func Dot(v1: Vector2, v2: Vector2) -> Float
+    {
+        return (v1.X * v2.X) + (v1.Y * v2.Y);
+    }
+    
+    /**
+     Return the distance between two Vector2 instances.
+     
+     - Parameter v1: Starting position.
+     - Parameter v2: Target position.
+     
+     - Returns: The distance between two Vector2 instances.
+     */
+    static func Distance(v1: Vector2, v2: Vector2) -> Float
+    {
+        return Math.sqrtf(Vector2.Dot((v1-v2), v2: (v1-v2)))
+    }
+    
+    /**
+     Return the distance between the current Vector2 instance and another instance.
+     
+     - Parameter other: The remote Vector2 instance.
+     
+     - Returns: The distance between the current Vector2 instance and another instance.
+     */
+    func distance(other: Vector2) -> Float
+    {
+        return Math.sqrtf(Vector2.Dot((self-other), v2: (self-other)))
+    }
+    
+    /**
+     Normalizes the current Vector2 instance, maintaining direction.
+     
+     - Returns: A normalized Vector2 instance with a magnitude of 1.0.
+     */
+    mutating func normalize()
+    {
+        let factor = 1.0 / magnitude()
+        _x *= factor;
+        _y *= factor;
     }
 }
 
@@ -319,8 +419,3 @@ func /= (inout v1: Vector2, f: Float)
 {
     v1 = v1 / f;
 }
-
-
-
-
-
